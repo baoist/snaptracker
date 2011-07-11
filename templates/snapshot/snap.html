@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>{{ images }}</h1>
+  <form action="/snapshot/" method="post">{% csrf_token %}
+    {{ formset }}
+    {{ current_date }}
+    <input type="submit" />
+  </form>
+{% endblock %}
