@@ -1,10 +1,20 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1>{{ images }}</h1>
+  <h1>{{ images }}</h1><p>{{ current_date }}</p>
+  {% if snap_formset.subject.errors %}
+      <ol>
+      {% for error in snap_formset.subject.errors %}
+          <li><strong>{{ error|escape }}</strong></li>
+      {% endfor %}
+      </ol>
+  {% endif %}
   <form action="/snapshot/" method="post">{% csrf_token %}
-    {{ formset }}
-    {{ current_date }}
+    {{ snap_formset }}
+    <div id="project">
+      <h3>Projects Working on:</h3>
+      {{ project_formset }}
+    </div>
     <input type="submit" />
   </form>
 {% endblock %}
