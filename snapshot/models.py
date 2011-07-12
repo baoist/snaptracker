@@ -2,6 +2,11 @@ from django.db import models
 from django.forms import ModelForm
 import datetime
 
+AVAILABILITY = (
+    (u'T', u'Yes'),        
+    (u'F', u'No'),        
+)
+
 PROJECTS_AVAILABLE = (
     (u'', u'Add Project'),
     (u'1', u'test1'),
@@ -15,6 +20,7 @@ PROJECTS_AVAILABLE = (
 class Planned(models.Model):
     start = models.IntegerField()
     end = models.IntegerField()
+    available = models.CharField(max_length=1, choices=AVAILABILITY, default='-')
     date = models.DateTimeField('date published')
 
 class Actual(models.Model):

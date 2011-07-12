@@ -1,18 +1,16 @@
-# Create your views here.
-from django import template, http, forms
+from django import db, template, http, forms
 from snapshot.models import *
+from django.db import models
 from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render_to_response
 import datetime
 
-PROJECTS_AVAILABLE = (
-    (u'test1', u'test1'),
-    (u'2', u'test2'),
-    (u'3', u'test3'),
-    (u'4', u'test4'),
-    (u'5', u'test5'),
-)
+def estimate_leave(current):
+    estimated_out = int(current) + 5
+    if estimated_out > 12:
+        estimated_out -= 12
+    return estimated_out
 
 def snap(request):
     if request.method == 'POST':
@@ -21,8 +19,10 @@ def snap(request):
         if snap_form.is_valid() and project_form.is_valid():
             return HttpResponseRedirect('/snapshot/complete/')
     else:
-        snap_form = PlannedForm({
-                            'start': datetime.datetime.now().strftime('%l'),
+        current_hour = datetime.datetime.now().strftime('%l')
+        snap_form = PlannedForm(initial={
+                            'start': current_hour,
+                            'end': estimate_leave(current_hour),
                         })
         project_form = ProjectForm()
     return render_to_response('snapshot/snap.html', {
@@ -34,6 +34,10 @@ def snap(request):
                             context_instance = template.RequestContext(request))
 
 def complete(request):
+    return render_to_response('snapshot/complete.html', {}, context_instance = template.RequestContext(request))
+
+def listall(request):
+    all_snaps = Planned.objects.all()
     return render_to_response('snapshot/complete.html', {}, context_instance = template.RequestContext(request))
 
 def home(request):
