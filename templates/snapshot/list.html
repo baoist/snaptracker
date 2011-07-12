@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>All Snapshots</h2>
+  {% for snap in snaps %}
+    <div class="snap">
+      <p>{{ snap.start }} AM</p>
+      <br/>
+      <p>{{ snap.end }} PM</p>
+      <br/>
+      {% for project in snap.project_set.all %}
+        <p>{{ project.name }}</p>
+      {% endfor %}
+      <br/>
+      <br/>
+    </div>
+  {% endfor %}
+{% endblock %}

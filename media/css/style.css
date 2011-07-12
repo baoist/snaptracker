@@ -14,7 +14,7 @@ body {
   background: #fff;
 }
 
-h1, h3, p, form {
+h2, h3, p, form {
   float: left;
 }
 
@@ -22,7 +22,7 @@ p#date {
   margin: 6px 0 0 10px;
 }
 
-h1 {
+h2 {
   font-weight: bold;
   font-size: 16px;
   padding: 3px 0 2px;

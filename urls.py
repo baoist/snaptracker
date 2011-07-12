@@ -19,6 +19,7 @@ urlpatterns = patterns('',
     url(r'^$', 'snapshot.views.home', name='home'),
     url(r'^snapshot/$', 'snapshot.views.snap', name='snap'),
     url(r'^snapshot/complete', 'snapshot.views.complete', name='complete'),
+    url(r'^snapshot/listall', 'snapshot.views.listall', name='listall'),
 )
 
 urlpatterns += patterns('',

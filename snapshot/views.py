@@ -17,6 +17,8 @@ def snap(request):
         snap_form = PlannedForm(request.POST)
         project_form = ProjectForm(request.POST)
         if snap_form.is_valid() and project_form.is_valid():
+            snap_form.save()
+            project_form.save(commit=False) # linked to snap_form
             return HttpResponseRedirect('/snapshot/complete/')
     else:
         current_hour = datetime.datetime.now().strftime('%l')
@@ -38,7 +40,10 @@ def complete(request):
 
 def listall(request):
     all_snaps = Planned.objects.all()
-    return render_to_response('snapshot/complete.html', {}, context_instance = template.RequestContext(request))
+    return render_to_response('snapshot/list.html', {
+                                'snaps': all_snaps,
+                            }, 
+                            context_instance = template.RequestContext(request))
 
 def home(request):
     return render_to_response('snapshot/home.html', {}, context_instance = template.RequestContext(request))
